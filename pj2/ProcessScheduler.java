@@ -14,6 +14,12 @@ import scheduler.Processor;
 import scheduler.processing.SimpleProcess;
 import scheduler.scheduling.policies.*;
 
+/*
+  Clase: ProcessScheduler
+  Descripción: Controla la ejecución de la simulación: 
+  genera procesos, los envía al procesador y muestra estadísticas.
+ */
+
 public class ProcessScheduler {
 
     private static boolean running = true;
@@ -21,6 +27,14 @@ public class ProcessScheduler {
     private static Processor processor;
     private static Thread generatorThread;
     private static Thread processorThread;
+
+        /*
+     Método: main
+     Parámetros: args (argumentos de ejecución)
+     Retorna: nada
+     Función: Configura la política, crea hilos de generación/procesamiento 
+     y controla la ejecución de la simulacion
+     */
 
     public static void main(String[] args) {
         if (args.length < 6) {

@@ -12,6 +12,8 @@ package scheduler;
 import scheduler.processing.*;
 import scheduler.scheduling.policies.*;
 
+// Clase que ejecuta los procesos de la cola según la
+// política de calendarización seleccionada.
 public class Processor implements Runnable {
     private Policy policy;
     private boolean running;
@@ -21,6 +23,10 @@ public class Processor implements Runnable {
     private double quantum;
     private boolean isPaused;
 
+    // Método: Processor 
+    // Parámetros: Policy, double 
+    // Retorna: void 
+    // Inicializa el procesador con política y quantum.
     public Processor(Policy policy, double quantum) {
         this.policy = policy;
         this.quantum = quantum;
@@ -31,6 +37,9 @@ public class Processor implements Runnable {
         this.isPaused = false;
     }
 
+    // Método: run 
+    // Retorna: void 
+    // Ejecuta el hilo principal que procesa los procesos de la cola.
     public void run() {
         running = true;
         while (running) {
@@ -91,35 +100,61 @@ public class Processor implements Runnable {
         }
     }
 
+    // Método: stop
+    // Retorna: void 
+    // Detiene la ejecución del procesador.
     public void stop() {
         running = false;
     }
 
+    // Método: pause 
+    // Retorna: void 
+    // Pausa la ejecución del procesador de forma sincronizada.
     public synchronized void pause() {
         isPaused = true;
     }
 
+    // Método: resume 
+    // Retorna: void 
+    // Reanuda la ejecución del procesador pausado.
     public synchronized void resume() {
         isPaused = false;
         notifyAll();
     }
 
+    // Método: isRunning 
+    // Retorna: boolean 
+    // Retorna true si el procesador está activo.
     public boolean isRunning() {
         return running;
     }
 
+    // Método: getCurrentProcess
+    // Parámetro: ninguno 
+    // Retorna: SimpleProcess
+    // Retorna el proceso que se está procesando actualmente.
     public SimpleProcess getCurrentProcess() {
         return currentProcess;
     }
 
+    // Método: getProcessedCount
+    // Retorna: int 
+    // Retorna la cantidad de procesos completados.
     public int getProcessedCount() {
         return processedCount;
     }
 
+    // Método: getTotalServiceTime
+    // Retorna: double 
+    // Retorna el tiempo total de servicio acumulado.
     public double getTotalServiceTime() {
         return totalServiceTime;
     }
 
+    // Método: getAverageServiceTime
+    // Parámetro: ninguno 
+    // Retorna: double 
+    // Retorna el tiempo promedio de servicio por proceso.
     public double getAverageServiceTime() {
         if (processedCount == 0) return 0;
         return totalServiceTime / processedCount;
